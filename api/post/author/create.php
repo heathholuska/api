@@ -1,35 +1,30 @@
 <?php
-
-//headers
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 header('Access-Control-Allow-Methods: POST');
-header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,
-     Access-Control-Allow_methods, Authorization, X-Requested-with');
+header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods,Authorization,X-Requested-with');
+
 include_once '../../config/Database.php';
-include_once '../../models/Post.php';
+include_once '../../models/Author.php';
 
-// Instantiate DB & Connect
 $database = new Database();
-$db = $database->connect();
+$db = $database->connect(); // Fixed connection method
 
-// Instantiate Blog Post Object
-$post = new Post($db);
+$author = new Author($db);
 
 // Get raw posted data
 $data = json_decode(file_get_contents("php://input"));
 
-$post->quote = $data->quote ?? null;
-$post->author_id = $data->author_id ?? null;
-$post->category_id = $data->category_id ?? null;
+// Verify data exists
+if (!$data || !isset($data->author)) {
+    echo json_encode(array('message' => 'Missing Required Parameters'));
+    exit;
+}
 
-//Create post
-if ($post->create()) {
-    echo json_encode(
-        array('message' => 'Post Created')
-    );
+$author->author = $data->author;
+
+if ($author->create()) {
+    echo json_encode(array('message' => 'Author Created'));
 } else {
-    echo json_encode(
-        array('message' => 'Post Not Created')
-    );
+    echo json_encode(array('message' => 'Author Not Created'));
 }
