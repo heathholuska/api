@@ -1,3 +1,4 @@
+<?php
 include_once 'database.php';
 header('Access-Control-Allow-Origin: *');
 
