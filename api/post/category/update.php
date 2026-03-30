@@ -23,9 +23,8 @@ $data = json_decode(file_get_contents("php://input"));
 
 $category->id = $data->id;
 
-$category->quote = $data->quote ?? null;
-$category->author_id = $data->author_id ?? null;
-$category->category_id = $data->category_id ?? null;
+$category->id = $data->id ?? null;
+$category->category = $data->category ?? null;
 
 //Update Post
 if ($category->update()) {
