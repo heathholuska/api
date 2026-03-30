@@ -6,14 +6,14 @@ header('Content-Type: application/json');
 header('Access-Control-Allow-Methods: DELETE');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
 include_once '../../config/Database.php';
-include_once '../../models/Post.php';
+include_once 'Author.php';
 
 // Instantiate DB & Connect
 $database = new Database();
 $db = $database->connect();
 
 // Instantiate Blog Post Object
-$post = new Post($db);
+$author = new Author($db);
 
 // Get raw posted data
 $data = json_decode(file_get_contents("php://input"));
@@ -21,11 +21,11 @@ $data = json_decode(file_get_contents("php://input"));
 
 // Set ID to UPDATE
 
-$post->id = $data->id;
+$author->id = $data->id;
 
 
 //DELETE Post
-if ($post->delete()) {
+if ($author->delete()) {
     echo json_encode(
         array('message' => 'Post Deleted')
     );
