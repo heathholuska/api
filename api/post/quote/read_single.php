@@ -17,6 +17,11 @@ $post->id = isset($_GET['id']) ? $_GET['id'] : die();
 // Get post
 $post->read_single();
 
+if ($post->quote != null) {
+    // Create and output $post_arr
+} else {
+    echo json_encode(array('message' => 'Post Not Found'));
+}
 // Create array
 $post_arr = array(
    'id' => $post->id,
