@@ -8,7 +8,7 @@ class Database {
     private $port = "5432";
     public $conn;
 
-    public function getConnection() {
+    public function connect() {
         $this->conn = null;
 
         try {
