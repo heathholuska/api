@@ -6,14 +6,14 @@ header('Content-Type: application/json');
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
 include_once '../../config/Database.php';
-include_once '../../models/Post.php';
+include_once 'Author.php';
 
 // Instantiate DB & Connect
 $database = new Database();
 $db = $database->connect();
 
 // Instantiate Blog Post Object
-$post = new Post($db);
+$author = new Author($db);
 
 // Get raw posted data
 $data = json_decode(file_get_contents("php://input"));
@@ -21,11 +21,11 @@ $data = json_decode(file_get_contents("php://input"));
 
 // Set ID to UPDATE
 
-$post->id = $data->id;
+$author->id = $data->id;
 
-$post->quote = $data->quote ?? null;
-$post->author_id = $data->author_id ?? null;
-$post->category_id = $data->category_id ?? null;
+$author->quote = $data->quote ?? null;
+$author->author_id = $data->author_id ?? null;
+$author->category_id = $data->category_id ?? null;
 
 //Update Post
 if ($post->update()) {
