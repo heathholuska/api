@@ -1,24 +1,22 @@
 <?php
 
-// Just Copied - Needs Updated 
-
 //headers
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 
 include_once '../../config/Database.php';
-include_once '../../models/Post.php';
+include_once 'Author.php';
 
 $database = new Database();
 $db = $database->connect();
 
-$post = new Post($db);
+$author = new Author($db);
 
 // Get ID
-$post->id = isset($_GET['id']) ? $_GET['id'] : die();
+$author->id = isset($_GET['id']) ? $_GET['id'] : die();
 
 // Get post
-$post->read_single();
+$author->read_single();
 
 // Create array
 $post_arr = array(
