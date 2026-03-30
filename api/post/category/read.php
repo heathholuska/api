@@ -5,15 +5,15 @@ header('Content-Type: application/json');
 
 // include
 include_once '../../config/Database.php';
-include_once '../../models/Post.php';
+include_once 'Category.php';
 
 // Instantiate DB & Connect
 $database = new Database();
 $db = $database->connect();
 
 // Instantiate post object
-$post = new Post($db);
-$result = $post->read();
+$category = new Post($db);
+$result = $category->read();
 $num = $result->rowCount();
 
 // Check if there are any posts
