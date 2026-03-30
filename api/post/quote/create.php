@@ -3,7 +3,8 @@
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 header('Access-Control-Allow-Methods: POST');
-header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,\n    Access-Control-Allow_methods, Authorization, X-Requested-with');
+header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,
+    Access-Control-Allow_methods, Authorization, X-Requested-with');
 include_once '../../config/database.php';
 include_once '../../models/post.php';
 
