@@ -1,38 +1,35 @@
 <?php
-// headers
+
+//headers
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
 include_once '../../config/Database.php';
-include_once '../../models/Post.php';
+include_once 'Author.php';
 
 // Instantiate DB & Connect
 $database = new Database();
 $db = $database->connect();
 
 // Instantiate Blog Post Object
-$post = new Post($db);
+$author = new Author($db);
 
 // Get raw posted data
 $data = json_decode(file_get_contents("php://input"));
 
-if (!$data || !isset($data->quote, $data->author_id, $data->category_id)) {
-    echo json_encode(array('message' => 'Invalid input'));
-    exit;
-}
 
-$post->quote = $data->quote ?? null;
-$post->author_id = $data->author_id ?? null;
-$post->category_id = $data->category_id ?? null;
+// Set ID to UPDATE
+$author->id = $data->id ?? null;
+$author->author = $data->author ?? null;
 
-//Create post
-if ($post->create()) {
+//Update Post
+if ($post->update()) {
     echo json_encode(
-        array('message' => 'Post Created')
+        array('message' => 'Post Updated')
     );
 } else {
     echo json_encode(
-        array('message' => 'Post Not Created')
+        array('message' => 'Post Not Updated')
     );
 }

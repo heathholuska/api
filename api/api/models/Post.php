@@ -1,50 +1,38 @@
 <?php
-header('Access-Control-Allow-Origin: *');
-
-  header('Content-Type: application/json');
-
-  $method = $_SERVER['REQUEST_METHOD'];
-
-
-
-  if ($method === 'OPTIONS') {
-
-    header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
-
-    header('Access-Control-Allow-Headers: Origin, Accept, Content-Type, X-Requested-With');
-
-    exit();
-
-  }
-class Quote
+class Post
 {
     private $conn;
     private $table = 'quotes';
 
-    // Quote Properties
     public $id;
     public $quote;
     public $author_id;
     public $category_id;
-    
-    // Joined Properties
-    public $author_name;
+    public $category;
     public $category_name;
+    public $author_name;
+    public $title;
+    public $body;
+    public $author;
+    public $created_at;
 
-    // Constructor with DB connection
     public function __construct($db)
     {
         $this->conn = $db;
     }
 
-    // Get All Quotes
+    // Get Posts
     public function read()
     {
         $query = 'SELECT
+                c.category as category,
                 c.category as category_name,
+                a.author as author,
                 a.author as author_name,
                 q.id,
                 q.quote,
+                q.quote as title,
+                q.quote as body,
                 q.author_id,
                 q.category_id
             FROM
@@ -61,14 +49,18 @@ class Quote
         return $stmt;
     }
 
-    // Get Single Quote
+    // Get Single Post
     public function read_single()
     {
         $query = 'SELECT
+                c.category as category,
                 c.category as category_name,
+                a.author as author,
                 a.author as author_name,
                 q.id,
                 q.quote,
+                q.quote as title,
+                q.quote as body,
                 q.author_id,
                 q.category_id
             FROM
@@ -87,17 +79,21 @@ class Quote
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // Check if a row exists before assigning properties
+        // Check if a row exists before assigning
         if ($row) {
             $this->quote = $row['quote'];
+            $this->title = $row['title'];
+            $this->body = $row['body'];
+            $this->author = $row['author'];
+            $this->author_name = $row['author_name'];
             $this->author_id = $row['author_id'];
             $this->category_id = $row['category_id'];
-            $this->author_name = $row['author_name'];
+            $this->category = $row['category'];
             $this->category_name = $row['category_name'];
         }
     }
 
-    // Create Quote
+    // Create Post
     public function create()
     {
         $query = 'INSERT INTO ' . $this->table . ' (quote, author_id, category_id)
@@ -105,12 +101,12 @@ class Quote
 
         $stmt = $this->conn->prepare($query);
 
-        // Sanitize incoming data
+        // Sanitize
         $this->quote = htmlspecialchars(strip_tags($this->quote));
         $this->author_id = htmlspecialchars(strip_tags($this->author_id));
         $this->category_id = htmlspecialchars(strip_tags($this->category_id));
 
-        // Bind data
+        // Bind
         $stmt->bindParam(':quote', $this->quote);
         $stmt->bindParam(':author_id', $this->author_id);
         $stmt->bindParam(':category_id', $this->category_id);
@@ -119,12 +115,11 @@ class Quote
             return true;
         }
 
-        // Log error silently without breaking JSON output
-        error_log("Database Error: " . $stmt->errorInfo()[2]);
+        printf("Error: %s.\n", $stmt->errorInfo()[2]);
         return false;
     }
 
-    // Update Quote
+    // Update Post
     public function update()
     {
         $query = 'UPDATE ' . $this->table . '
@@ -133,13 +128,13 @@ class Quote
 
         $stmt = $this->conn->prepare($query);
 
-        // Sanitize incoming data
+        // Sanitize
         $this->id = htmlspecialchars(strip_tags($this->id));
         $this->quote = htmlspecialchars(strip_tags($this->quote));
         $this->author_id = htmlspecialchars(strip_tags($this->author_id));
         $this->category_id = htmlspecialchars(strip_tags($this->category_id));
 
-        // Bind data
+        // Bind
         $stmt->bindParam(':id', $this->id);
         $stmt->bindParam(':quote', $this->quote);
         $stmt->bindParam(':author_id', $this->author_id);
@@ -149,29 +144,28 @@ class Quote
             return true;
         }
 
-        error_log("Database Error: " . $stmt->errorInfo()[2]);
+        printf("Error: %s.\n", $stmt->errorInfo()[2]);
         return false;
     }
 
-    // Delete Quote
+    // Delete Post
     public function delete()
     {
         $query = 'DELETE FROM ' . $this->table . ' WHERE id = :id';
 
         $stmt = $this->conn->prepare($query);
 
-        // Sanitize incoming data
+        // Sanitize
         $this->id = htmlspecialchars(strip_tags($this->id));
 
-        // Bind data
+        // Bind
         $stmt->bindParam(':id', $this->id);
 
         if ($stmt->execute()) {
             return true;
         }
 
-        error_log("Database Error: " . $stmt->errorInfo()[2]);
+        printf("Error: %s.\n", $stmt->errorInfo()[2]);
         return false;
     }
 }
-?>
