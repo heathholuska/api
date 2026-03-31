@@ -11,7 +11,7 @@ class Quote
     public $category_id;
 
     // Joined Properties
-    public $author;
+    public $author_name;
     public $category_name;
 
     // Constructor with DB connection
@@ -75,7 +75,7 @@ class Quote
             $this->quote = $row['quote'];
             $this->author_id = $row['author_id'];
             $this->category_id = $row['category_id'];
-            $this->author = $row['author_name'];
+            $this->author_name = $row['author_name'];
             $this->category_name = $row['category_name'];
         }
     }
