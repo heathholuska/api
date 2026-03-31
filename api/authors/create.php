@@ -11,7 +11,7 @@ if ($method === 'OPTIONS') {
 }
 
 include_once '../../config/Database.php';
-include_once '../models/Author.php';
+include_once '../../models/Author.php';
 
 $database = new Database();
 $db = $database->connect(); // Fixed connection method

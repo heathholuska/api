@@ -12,7 +12,7 @@ if ($method === 'OPTIONS') {
 
 // include
 include_once '../../config/Database.php';
-include_once '../models/Author.php';
+include_once '../../models/Author.php';
 
 // Instantiate DB & Connect
 $database = new Database();
