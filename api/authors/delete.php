@@ -10,8 +10,8 @@ if ($method === 'OPTIONS') {
     header('Access-Control-Allow-Headers: Origin, Accept, Content-Type, X-Requested-With');
     exit();
 }
-include_once '../../config/Database.php';
-include_once '../../models/Author.php';
+include_once '../config/Database.php';
+include_once '../models/Author.php';
 
 // Instantiate DB & Connect
 $database = new Database();

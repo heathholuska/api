@@ -13,8 +13,8 @@ if ($method === 'OPTIONS') {
     exit();
 }
 
-include_once '../../config/Database.php';
-include_once '../../models/Categories.php';
+include_once '../config/Database.php';
+include_once '../models/Category.php';
 
 $database = new Database();
 $db = $database->connect();
