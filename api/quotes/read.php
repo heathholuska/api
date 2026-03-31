@@ -20,9 +20,9 @@ if ($num > 0) {
             'id' => $id,
             'quote' => html_entity_decode((string) ($row['quote'] ?? '')),
             'author' => $author_name,
-            'author_id' => $author_id,
-            'category_id' => $category_id,
-            'category_name' => $category_name
+            //'author_id' => $author_id,
+            //'category_id' => $category_id,
+            'category' => $category_name
         );
 
         // Push to "data"

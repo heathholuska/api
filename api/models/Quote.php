@@ -11,7 +11,7 @@ class Quote
     public $category_id;
 
     // Joined Properties
-    public $author_name;
+    public $author;
     public $category_name;
 
     // Constructor with DB connection
@@ -39,10 +39,29 @@ class Quote
             ORDER BY
                 q.id DESC';
 
+        if ($this->author_id && $this->category_id) {
+            $query .= ' WHERE q.author_id = :author_id AND q.category_id = :category_id';
+            ;
+        } elseif ($this->author_id) {
+            $query .= ' WHERE qu.author_id = :author_id';
+        } elseif ($this->category_id) {
+            $query .= ' WHERE q.category_id = :category_id';
+        }
+        $query .= ' ORDER BY q.id DESC';
+
+
+
         $stmt = $this->conn->prepare($query);
+        if ($this->author_id) {
+            $stmt->bindParam(':author_id', $this->author_id);
+        }
+        if ($this->category_id) {
+            $stmt->bindParam(':category_id', $this->category_id);
+        }
         $stmt->execute();
         return $stmt;
     }
+
 
     // Get Single Quote
     public function read_single()
@@ -75,7 +94,7 @@ class Quote
             $this->quote = $row['quote'];
             $this->author_id = $row['author_id'];
             $this->category_id = $row['category_id'];
-            $this->author_name = $row['author_name'];
+            $this->author = $row['author_name'];
             $this->category_name = $row['category_name'];
         }
     }
