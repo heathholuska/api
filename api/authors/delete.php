@@ -11,7 +11,7 @@ if ($method === 'OPTIONS') {
     exit();
 }
 include_once '../../config/Database.php';
-include_once 'Author.php';
+include_once '../models/Author.php';
 
 // Instantiate DB & Connect
 $database = new Database();
