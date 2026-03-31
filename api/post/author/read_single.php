@@ -15,18 +15,18 @@ $author = new Author($db);
 // Get ID
 $author->id = isset($_GET['id']) ? $_GET['id'] : die();
 
-// Get post
+// Get author
 $author->read_single();
 
-// Create array
-$post_arr = array(
-    'id' => $post->id,
-    'title' => $post->title,
-    'body' => $post->body,
-    'author' => $post->author,
-    'category_id' => $post->category_id,
-    'category_name' => $post->category_name
-);
+if ($author->author != null) {
+    // Create array
+    $post_arr = array(
+        'id' => $author->id,
+        'author' => $author->author
+    );
 
-// Make JSON
-print_r(json_encode($post_arr));
+    // Make JSON
+    echo json_encode($post_arr);
+} else {
+    echo json_encode(array('message' => 'Author Not Found'));
+}
