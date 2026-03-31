@@ -12,23 +12,21 @@ $database = new Database();
 $db = $database->connect();
 
 // Instantiate post object
-$category = new Post($db);
-$result = $category->read();
+$categoryObj = new Category($db);
+$result = $categoryObj->read();
 $num = $result->rowCount();
 
-// Check if there are any posts
+// Check if there are any categories
 if ($num > 0) {
 
-    // Posts array
+    // Categories array
     $posts_arr = array();
     $posts_arr['data'] = array();
 
     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-        extract($row);
-
         $post_item = array(
-            'id' => $id,
-            'category' => $category
+            'id' => $row['id'],
+            'category' => $row['category']
         );
 
         // Push to "data"
@@ -39,9 +37,9 @@ if ($num > 0) {
     echo json_encode($posts_arr);
 
 } else {
-    // No Posts
+    // No Categories
     echo json_encode(
-        array('message' => 'No Posts Found')
+        array('message' => 'No Categories Found')
     );
 
 }

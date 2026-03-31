@@ -18,20 +18,19 @@ $post->id = isset($_GET['id']) ? $_GET['id'] : die();
 $post->read_single();
 
 if ($post->quote != null) {
-    // Create and output $post_arr
-} else {
-    echo json_encode(array('message' => 'Post Not Found'));
-}
-// Create array
-$post_arr = array(
-   'id' => $post->id,
-   'quote' => $post->quote,
-   'author' => $post->author,
-   'author_id' => $post->author_id,
-   'category' => $post->category,
-   'category_id' => $post->category_id,
-   'category_name' => $post->category_name
-);
+    // Create array
+    $post_arr = array(
+        'id' => $post->id,
+        'quote' => $post->quote,
+        'author' => $post->author,
+        'author_id' => $post->author_id,
+        'category' => $post->category,
+        'category_id' => $post->category_id,
+        'category_name' => $post->category_name
+    );
 
-// Make JSON
-print_r(json_encode($post_arr));
+    // Make JSON
+    echo json_encode($post_arr);
+} else {
+    echo json_encode(array('message' => 'Quote Not Found'));
+}

@@ -18,21 +18,22 @@ $category = new Category($db);
 // Get raw posted data
 $data = json_decode(file_get_contents("php://input"));
 
+if (!$data || !isset($data->id, $data->category)) {
+    echo json_encode(array('message' => 'Missing Required Parameters'));
+    exit;
+}
 
-// Set ID to UPDATE
-
+// Set fields to UPDATE
 $category->id = $data->id;
+$category->category = $data->category;
 
-$category->id = $data->id ?? null;
-$category->category = $data->category ?? null;
-
-//Update Post
+// Update category
 if ($category->update()) {
     echo json_encode(
-        array('message' => 'Post Updated')
+        array('message' => 'Category Updated')
     );
 } else {
     echo json_encode(
-        array('message' => 'Post Not Updated')
+        array('message' => 'Category Not Updated')
     );
 }

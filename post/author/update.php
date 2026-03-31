@@ -18,18 +18,22 @@ $author = new Author($db);
 // Get raw posted data
 $data = json_decode(file_get_contents("php://input"));
 
+if (!$data || !isset($data->id, $data->author)) {
+    echo json_encode(array('message' => 'Missing Required Parameters'));
+    exit;
+}
 
 // Set ID to UPDATE
-$author->id = $data->id ?? null;
-$author->author = $data->author ?? null;
+$author->id = $data->id;
+$author->author = $data->author;
 
-//Update Post
-if ($post->update()) {
+// Update Author
+if ($author->update()) {
     echo json_encode(
-        array('message' => 'Post Updated')
+        array('message' => 'Author Updated')
     );
 } else {
     echo json_encode(
-        array('message' => 'Post Not Updated')
+        array('message' => 'Author Not Updated')
     );
 }
