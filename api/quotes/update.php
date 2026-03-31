@@ -10,14 +10,14 @@ if ($method === 'OPTIONS') {
     exit();
 }
 include_once '../../config/Database.php';
-include_once '../../models/Post.php';
+include_once '../../models/Quote.php';
 
 // Instantiate DB & Connect
 $database = new Database();
 $db = $database->connect();
 
 // Instantiate Blog Post Object
-$post = new Post($db);
+$quote = new Quote($db);
 
 // Get raw posted data
 $data = json_decode(file_get_contents("php://input"));
@@ -30,14 +30,14 @@ if (!$data || !isset($data->id, $data->quote, $data->author_id, $data->category_
 
 // Set ID to UPDATE
 
-$post->id = $data->id;
+$quote->id = $data->id;
 
-$post->quote = $data->quote ?? null;
-$post->author_id = $data->author_id ?? null;
-$post->category_id = $data->category_id ?? null;
+$quote->quote = $data->quote ?? null;
+$quote->author_id = $data->author_id ?? null;
+$quote->category_id = $data->category_id ?? null;
 
 // Update Post
-if ($post->update()) {
+if ($quote->update()) {
     echo json_encode(
         array('message' => 'Post Updated')
     );

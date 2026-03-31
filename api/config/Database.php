@@ -6,9 +6,9 @@ class Database {
     private $username = "hholuska";
     private $password = "MpNTB0w8NKuvQavJ971sheuwmloueNjZ";
     private $port = "5432";
-    public $conn;
+    public ?PDO $conn;
 
-    public function connect() {
+    public function connect(): ?PDO {
         $this->conn = null;
 
         try {

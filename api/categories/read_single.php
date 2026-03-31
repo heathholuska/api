@@ -14,7 +14,7 @@ if ($method === 'OPTIONS') {
 }
 
 include_once '../../config/Database.php';
-include_once 'Category.php';
+include_once '../../models/Categories.php';
 
 $database = new Database();
 $db = $database->connect();

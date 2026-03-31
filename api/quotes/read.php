@@ -11,13 +11,13 @@ if ($method === 'OPTIONS') {
 }
 
 include_once '../../config/Database.php';
-include_once '../../models/Post.php';
+include_once '../../models/Quote.php';
 
 $database = new Database();
 $db = $database->connect();
 
-$post = new Post($db);
-$result = $post->read();
+$quoteModel = new Quote($db);
+$result = $quoteModel->read();
 $num = $result->rowCount();
 
 if ($num > 0) {
@@ -29,7 +29,7 @@ if ($num > 0) {
 
         $post_item = array(
             'id' => $id,
-            'quote' => html_entity_decode($quote),
+            'quote' => html_entity_decode((string) ($row['quote'] ?? '')),
             'author' => $author,
             'author_id' => $author_id,
             'category' => $category,

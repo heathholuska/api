@@ -11,29 +11,28 @@ if ($method === 'OPTIONS') {
 }
 
 include_once '../../config/Database.php';
-include_once '../../models/Post.php';
+include_once '../../models/Quote.php';
 
 $database = new Database();
 $db = $database->connect();
 
-$post = new Post($db);
+$quote = new Quote($db);
 
 // Get ID
-$post->id = isset($_GET['id']) ? $_GET['id'] : die();
+$quote->id = isset($_GET['id']) ? $_GET['id'] : die();
 
 // Get post
-$post->read_single();
+$quote->read_single();
 
-if ($post->quote != null) {
+if ($quote->quote != null) {
     // Create array
     $post_arr = array(
-        'id' => $post->id,
-        'quote' => $post->quote,
-        'author' => $post->author,
-        'author_id' => $post->author_id,
-        'category' => $post->category,
-        'category_id' => $post->category_id,
-        'category_name' => $post->category_name
+        'id' => $quote->id,
+        'quote' => $quote->quote,
+        'author' => $quote->author,
+        'author_id' => $quote->author_id,
+        'category_id' => $quote->category_id,
+        'category_name' => $quote->category_name
     );
 
     // Make JSON
