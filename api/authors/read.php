@@ -1,14 +1,4 @@
 <?php
-// headers
-header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json');
-$method = $_SERVER['REQUEST_METHOD'];
-
-if ($method === 'OPTIONS') {
-    header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
-    header('Access-Control-Allow-Headers: Origin, Accept, Content-Type, X-Requested-With');
-    exit();
-}
 
 // include
 include_once '../config/Database.php';
@@ -28,7 +18,7 @@ if ($num > 0) {
 
     // Posts array
     $posts_arr = array();
-    $posts_arr['data'] = array();
+
 
     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
         extract($row);
@@ -39,7 +29,7 @@ if ($num > 0) {
         );
 
         // Push to "data"
-        array_push($posts_arr['data'], $post_item);
+        array_push($posts_arr, $post_item);
     }
 
     // Turn to JSON & Output
