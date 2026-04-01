@@ -20,8 +20,8 @@ if ($quote->quote != null) {
         'id' => $quote->id,
         'quote' => $quote->quote,
         'author' => $quote->author,
-        'author_id' => $quote->author_id,
-        'category_name' => $quote->category_name
+        //'author_id' => $quote->author_id,
+        'category' => $quote->category_name
     );
 
     // Make JSON

@@ -43,7 +43,7 @@ class Quote
             $query .= ' WHERE q.author_id = :author_id AND q.category_id = :category_id';
             ;
         } elseif ($this->author_id) {
-            $query .= ' WHERE qu.author_id = :author_id';
+            $query .= ' WHERE q.author_id = :author_id';
         } elseif ($this->category_id) {
             $query .= ' WHERE q.category_id = :category_id';
         }
