@@ -14,13 +14,22 @@ $quotes = new Quote($db);
 $data = json_decode(file_get_contents("php://input"));
 
 if (!$data || !isset($data->id)) {
-    echo json_encode(array('message' => 'Invalid input'));
+    echo json_encode(array('message' => 'Missing Required Parameters'));
     exit;
 }
 
 // Set ID to DELETE
 
 $quotes->id = $data->id;
+
+// check if quote exists
+$checkQuote = new Quote($db);
+$checkQuote->id = $quotes->id;
+$checkQuote->read_single();
+if ($checkQuote->quote == null) {
+    echo json_encode(array('message' => 'No Quotes Found'));
+    exit;
+}
 
 // DELETE Post
 if ($quotes->delete()) {

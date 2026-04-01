@@ -19,15 +19,23 @@ if (!$data || !isset($data->quote, $data->author_id, $data->category_id)) {
     exit;
 }
 
-$quotes->quote = $data->quote;// ?? null;
-$quotes->author_id = $data->author_id;// ?? null;
-$quotes->category_id = $data->category_id;// ?? null;
+$quotes->quote = $data->quote;
+$quotes->author_id = $data->author_id;
+$quotes->category_id = $data->category_id;
 
 $category = new Category($db);
 $category->id = $quotes->category_id;
 $category->read_single();
 if ($category->category == null) {
     echo json_encode(array('message' => 'category_id Not Found'));
+    exit;
+}
+
+$author = new Author($db);
+$author->id = $quotes->author_id;
+$author->read_single();
+if ($author->author == null) {
+    echo json_encode(array('message' => 'author_id Not Found'));
     exit;
 }
 
@@ -41,6 +49,5 @@ if ($quotes->create()) {
         'category_id' => $quotes->category_id
     ));
 } else {
-    array('message' => 'Quote Created');
-
+    echo json_encode(array('message' => 'Quote Not Created'));
 }
