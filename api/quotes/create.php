@@ -1,6 +1,8 @@
 <?php
 include_once '../config/Database.php';
 include_once '../models/Quote.php';
+include_once '../models/Category.php';
+include_once '../models/Author.php';
 
 // Instantiate DB & Connect
 $database = new Database();
@@ -13,21 +15,32 @@ $quotes = new Quote($db);
 $data = json_decode(file_get_contents("php://input"));
 
 if (!$data || !isset($data->quote, $data->author_id, $data->category_id)) {
-    echo json_encode(array('message' => 'Invalid input'));
+    echo json_encode(array('message' => 'Missing Required Parameters'));
     exit;
 }
 
-$quotes->quote = $data->quote ?? null;
-$quotes->author_id = $data->author_id ?? null;
-$quotes->category_id = $data->category_id ?? null;
+$quotes->quote = $data->quote;// ?? null;
+$quotes->author_id = $data->author_id;// ?? null;
+$quotes->category_id = $data->category_id;// ?? null;
+
+$category = new Category($db);
+$category->id = $quotes->category_id;
+$category->read_single();
+if ($category->category == null) {
+    echo json_encode(array('message' => 'category_id Not Found'));
+    exit;
+}
 
 //Create post
 if ($quotes->create()) {
-    echo json_encode(
-        array('message' => 'Quote Created')
-    );
+    $quotes->id = $db->LastInsertId();
+    echo json_encode(array(
+        'id' => $quotes->id,
+        'quote' => $quotes->quote,
+        'author_id' => $quotes->author_id,
+        'category_id' => $quotes->category_id
+    ));
 } else {
-    echo json_encode(
-        array('message' => 'Quote Not Created')
-    );
+    array('message' => 'Quote Created');
+
 }

@@ -21,11 +21,11 @@ $category->category = $data->category;
 
 // Create category
 if ($category->create()) {
-    echo json_encode(
-        array('message' => 'Category Created')
-    );
+    $category->id = $db->lastInsertId();
+    echo json_encode(array(
+        'id' => $category->id,
+        'category' => $category->category
+    ));
 } else {
-    echo json_encode(
-        array('message' => 'Category Not Created')
-    );
+    echo json_encode(array('message' => 'Category Not Created'));
 }

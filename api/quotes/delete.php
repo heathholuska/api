@@ -18,19 +18,13 @@ if (!$data || !isset($data->id)) {
     exit;
 }
 
-
 // Set ID to DELETE
 
 $quotes->id = $data->id;
 
-
 // DELETE Post
 if ($quotes->delete()) {
-    echo json_encode(
-        array('message' => 'Quote Deleted')
-    );
+    echo json_encode(array('id' => $quotes->id));
 } else {
-    echo json_encode(
-        array('message' => 'Quote Not Deleted')
-    );
+    echo json_encode(array('message' => 'Quote Not Deleted'));
 }

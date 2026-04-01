@@ -4,8 +4,7 @@ include_once '../config/Database.php';
 include_once '../models/Author.php';
 
 $database = new Database();
-$db = $database->connect(); // Fixed connection method
-
+$db = $database->connect();
 $author = new Author($db);
 
 // Get raw posted data
@@ -20,7 +19,11 @@ if (!$data || !isset($data->author)) {
 $author->author = $data->author;
 
 if ($author->create()) {
-    echo json_encode(array('message' => 'Author Created'));
+    $author->id = $db->lastInsertId();
+    echo json_encode(array(
+        'id' => $author->id,
+        'author' => $author->author
+    ));
 } else {
     echo json_encode(array('message' => 'Author Not Created'));
 }

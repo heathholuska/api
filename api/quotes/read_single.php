@@ -27,5 +27,5 @@ if ($quote->quote != null) {
     // Make JSON
     echo json_encode($post_arr);
 } else {
-    echo json_encode(array('message' => 'Quote Not Found'));
+    echo json_encode(array('message' => 'No Quotes Found'));
 }
