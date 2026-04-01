@@ -35,9 +35,8 @@ class Quote
             LEFT JOIN
                 authors a ON q.author_id = a.id
             LEFT JOIN
-                categories c ON q.category_id = c.id
-            ORDER BY
-                q.id DESC';
+                categories c ON q.category_id = c.id';
+
 
         if ($this->author_id && $this->category_id) {
             $query .= ' WHERE q.author_id = :author_id AND q.category_id = :category_id';
