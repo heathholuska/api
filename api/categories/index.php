@@ -1,4 +1,6 @@
 <?php
+
+// Required CORS header
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 $method = $_SERVER['REQUEST_METHOD'];
@@ -9,7 +11,7 @@ if ($method === 'OPTIONS') {
     exit();
 }
 
-switch($method) {
+switch ($method) {
     case 'GET':
         if (isset($_GET['id'])) {
             require 'read_single.php';

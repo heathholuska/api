@@ -18,8 +18,6 @@ if ($num > 0) {
 
     // Categories array
     $posts_arr = array();
-
-
     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
         $post_item = array(
             'id' => $row['id'],
@@ -38,5 +36,4 @@ if ($num > 0) {
     echo json_encode(
         array('message' => 'No Categories Found')
     );
-
 }

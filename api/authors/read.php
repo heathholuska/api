@@ -19,10 +19,8 @@ if ($num > 0) {
     // Posts array
     $posts_arr = array();
 
-
     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
         extract($row);
-
         $post_item = array(
             'id' => $id,
             'author' => $author,

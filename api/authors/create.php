@@ -3,6 +3,7 @@
 include_once '../config/Database.php';
 include_once '../models/Author.php';
 
+// Instantiate DB & Connect
 $database = new Database();
 $db = $database->connect();
 $author = new Author($db);

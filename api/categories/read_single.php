@@ -3,9 +3,9 @@
 include_once '../config/Database.php';
 include_once '../models/Category.php';
 
+// Instantiate DB & Connect
 $database = new Database();
 $db = $database->connect();
-
 $category = new Category($db);
 
 // Get ID
@@ -15,7 +15,6 @@ $category->id = isset($_GET['id']) ? $_GET['id'] : die();
 $category->read_single();
 
 // Create array
-
 if ($category->category != null) {
     $post_arr = array(
         'id' => $category->id,
